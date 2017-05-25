@@ -94,5 +94,34 @@ class TestDiagonalSudoku(unittest.TestCase):
     def test_solve(self):
         self.assertEqual(solution.solve(self.diagonal_grid), self.solved_diag_sudoku)
 
+class TestValidSudoko(unittest.TestCase):
+    grid1 = "..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3.."
+    grid2 = '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......'
+    grid3 = '1.4.9..68956.18.34..81.695151.....868..6...1264..8..97781923645495.6.823.6.854179'
+    grid4 = '9.1....8.8.5.7..4.2.4....6...7......5..............83.3..6......9................'
+    grid5 = '1......2.....9.5...............8...4.........9..7123...........3....4.....936.4..'
+
+    def valid_answer(self, values):
+        if values is False:
+            return
+        try:
+            for unit in solution.units:
+                self.assertEqual(''.join(sorted(values[box] for box in unit)), '123456789', "unit " + str(unit))
+        except:
+            solution.display(values)
+            raise
+
+    def test_grid1(self):
+        self.valid_answer(solution.solve(self.grid1))
+    def test_grid2(self):
+        self.valid_answer(solution.solve(self.grid2))
+    def test_grid3(self):
+        self.valid_answer(solution.solve(self.grid3))
+    def test_grid4(self):
+        self.valid_answer(solution.solve(self.grid4))
+    def test_grid5(self):
+        self.valid_answer(solution.solve(self.grid5))
+
+
 if __name__ == '__main__':
     unittest.main()
